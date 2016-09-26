@@ -1,1 +1,1 @@
-# globusControl
+# SegmentControl-with-IBInspectable-IBDesignable
