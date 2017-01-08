@@ -12,18 +12,21 @@ import UIKit
     
     
     //MARK:- Inits
+    
     init() {
-        
         super.init(frame: CGRect.zero)
-        
-        self.textAlignment = NSTextAlignment.center
-        self.textColor = Constants.defaultTitleColor
-        self.font = font
-        self.backgroundColor = UIColor.clear
-        
+        self.initialSetup()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        self.initialSetup()
+    }
+    
+    fileprivate func initialSetup() {
+        self.textAlignment = NSTextAlignment.center
+        self.textColor = Constants.defaultTitleColor
+        self.font = Constants.defaultFont
+        self.backgroundColor = UIColor.clear
     }
 }
