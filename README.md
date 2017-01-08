@@ -1,1 +1,1 @@
-# SegmentControl-with-IBInspectable-IBDesignable
+# SFSegmentControl
