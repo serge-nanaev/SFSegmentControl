@@ -42,12 +42,6 @@ fileprivate struct SFSegment {
         }
     }
     
-    @IBInspectable var font: UIFont = Constants.defaultFont {
-        didSet {
-            self.segmentsViews.forEach { $0.font = font }
-        }
-    }
-    
     @IBInspectable var containerBorderColor: UIColor = Constants.defaultContainerBorderColor {
         didSet {
             self.setupContainer()
@@ -60,7 +54,13 @@ fileprivate struct SFSegment {
         }
     }
     
-    open var delegate: SFSegmentControlDelegate?
+    public var font: UIFont = Constants.defaultFont {
+        didSet {
+            self.segmentsViews.forEach { $0.font = font }
+        }
+    }
+    
+    public var delegate: SFSegmentControlDelegate?
     
     fileprivate var animationDuration = 0.2
     
@@ -137,6 +137,7 @@ fileprivate struct SFSegment {
         self.generateSegmentViews()
     }
     
+    //Initial data for Preview
     fileprivate func addInitialData() {
         self.segments = [SFSegment(title: "1", selectedTitle: "1 day"),
                          SFSegment(title: "2", selectedTitle: "2 days"),
@@ -150,6 +151,8 @@ fileprivate struct SFSegment {
         self.segmentsViews.removeAll()
         for segment in segments {
             let newSegmentView = SFSegmentView()
+            newSegmentView.font = self.font
+            newSegmentView.textColor = self.titleColor
             newSegmentView.text = segment.title
             self.addSubview(newSegmentView)
             segmentsViews.append(newSegmentView)
@@ -165,8 +168,6 @@ fileprivate struct SFSegment {
     }
     
     //MARK: SegmentViews
-    
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -177,7 +178,6 @@ fileprivate struct SFSegment {
     
     fileprivate func setFrames() {
         let width = self.bounds.width
-        
         let avalibleWidthForButton = width / CGFloat(segmentsViews.count)
         
         for (index, segment) in segmentsViews.enumerated() {
@@ -205,11 +205,9 @@ fileprivate struct SFSegment {
     }
     
     fileprivate func selectNearestSegment(with gesture: UIGestureRecognizer) {
-        
         let location = gesture.location(in: self)
         let index = self.getIndexFromPoint(point: location)
         self.selectSegmentAtIndex(index: index)
-        
     }
     
     fileprivate func getIndexFromPoint(point: CGPoint) -> Int {
